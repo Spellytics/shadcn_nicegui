@@ -55,7 +55,8 @@ Every component should follow this pattern:
 def shadcn_component(
     required_param: str,
     optional_param: str = 'default',
-    font_family: Optional[str] = None
+    font_family: Optional[str] = None,
+    additional_classes: Optional[List[str]] = None,
 ):
     """Brief description of the component.
 
@@ -63,6 +64,7 @@ def shadcn_component(
         required_param: Description of required parameter
         optional_param: Description with default value
         font_family: Optional custom font family (overrides global font)
+        additional_classes: Optional list of additional Tailwind CSS classes
 
     Returns:
         The NiceGUI element created

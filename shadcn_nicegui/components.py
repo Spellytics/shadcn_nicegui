@@ -38,7 +38,7 @@ def set_global_font(font_family: str):
     FontConfig.set_font(font_family)
 
 
-def button(text: str, on_click=None, variant='default', size='default', icon=None, font_family: Optional[str] = None):
+def button(text: str, on_click=None, variant='default', size='default', icon=None, font_family: Optional[str] = None, additional_classes: str = ''):
     """Create a shadcn-style button
 
     Args:
@@ -48,6 +48,7 @@ def button(text: str, on_click=None, variant='default', size='default', icon=Non
         size: 'default', 'sm', 'lg', 'icon'
         icon: Optional icon name
         font_family: Optional custom font family (overrides global font)
+        additional_classes: Additional Tailwind classes
     """
 
     # Base classes for all buttons
@@ -70,7 +71,7 @@ def button(text: str, on_click=None, variant='default', size='default', icon=Non
         'icon': 'h-10 w-10',
     }
 
-    classes = f'{base_classes} {variant_classes.get(variant, variant_classes["default"])} {size_classes.get(size, size_classes["default"])}'
+    classes = f'{base_classes} {variant_classes.get(variant, variant_classes["default"])} {size_classes.get(size, size_classes["default"])} {additional_classes}'.strip()
 
     btn = ui.button(text, on_click=on_click).classes(classes)
     btn.props('flat no-caps')
@@ -82,7 +83,7 @@ def button(text: str, on_click=None, variant='default', size='default', icon=Non
     return btn
 
 
-def input(label: str = '', placeholder: str = '', value: str = '', font_family: Optional[str] = None):
+def input(label: str = '', placeholder: str = '', value: str = '', font_family: Optional[str] = None, additional_classes: str = ''):
     """Create a shadcn-style input field
 
     Args:
@@ -90,6 +91,7 @@ def input(label: str = '', placeholder: str = '', value: str = '', font_family: 
         placeholder: Placeholder text
         value: Initial value
         font_family: Optional custom font family (overrides global font)
+        additional_classes: Additional Tailwind classes
     """
     font = font_family or FontConfig.get_font()
 
@@ -98,7 +100,7 @@ def input(label: str = '', placeholder: str = '', value: str = '', font_family: 
             label_elem = ui.label(label).classes('text-sm font-medium text-black')
             label_elem.style(f'font-family: {font}')
         input_field = ui.input(placeholder=placeholder, value=value)
-        input_field.classes('w-full')
+        input_field.classes(f'w-full {additional_classes}'.strip())
         input_field.props('outlined dense borderless')
         input_field.props('bg-color="white" color="slate-900"')
         input_field.style(f'font-family: {font}')
@@ -106,7 +108,7 @@ def input(label: str = '', placeholder: str = '', value: str = '', font_family: 
     return input_field
 
 
-def select(options: list, label: str = '', value=None, font_family: Optional[str] = None):
+def select(options: list, label: str = '', value=None, font_family: Optional[str] = None, additional_classes: str = ''):
     """Create a shadcn-style select field
 
     Args:
@@ -114,6 +116,7 @@ def select(options: list, label: str = '', value=None, font_family: Optional[str
         label: Select label
         value: Initial value
         font_family: Optional custom font family (overrides global font)
+        additional_classes: Additional Tailwind classes
     """
     font = font_family or FontConfig.get_font()
 
@@ -122,7 +125,7 @@ def select(options: list, label: str = '', value=None, font_family: Optional[str
             label_elem = ui.label(label).classes('text-sm font-medium text-black')
             label_elem.style(f'font-family: {font}')
         select_field = ui.select(options, value=value)
-        select_field.classes('w-full')
+        select_field.classes(f'w-full {additional_classes}'.strip())
         select_field.props('outlined dense borderless')
         select_field.props('bg-color="white" color="slate-900"')
         select_field.style(f'font-family: {font}')
@@ -130,7 +133,7 @@ def select(options: list, label: str = '', value=None, font_family: Optional[str
     return select_field
 
 
-def heading(text: str, level: int = 3, color: str = 'text-black', font_family: Optional[str] = None):
+def heading(text: str, level: int = 3, color: str = 'text-black', font_family: Optional[str] = None, additional_classes: str = ''):
     """Create a shadcn-style heading
 
     Args:
@@ -138,6 +141,7 @@ def heading(text: str, level: int = 3, color: str = 'text-black', font_family: O
         level: Heading level 1-6 (default: 3)
         color: Tailwind color class (default: 'text-black')
         font_family: Optional custom font family (overrides global font)
+        additional_classes: Additional Tailwind classes
     """
     size_classes = {
         1: 'text-4xl font-bold',
@@ -148,7 +152,7 @@ def heading(text: str, level: int = 3, color: str = 'text-black', font_family: O
         6: 'text-base font-medium'
     }
 
-    classes = f'{size_classes.get(level, size_classes[3])} {color}'
+    classes = f'{size_classes.get(level, size_classes[3])} {color} {additional_classes}'.strip()
     font = font_family or FontConfig.get_font()
     heading = ui.label(text).classes(classes)
     heading.style(f'font-family: {font}')
@@ -169,7 +173,7 @@ def card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str 
 
     # Variant-specific classes
     variant_classes = {
-        'default': 'shadow-sm',
+        'default': 'border border-slate-200 shadow-none',
         'outlined': 'border border-slate-200 shadow-none',
         'elevated': 'shadow-lg',
         'ghost': 'shadow-none',
@@ -211,11 +215,12 @@ def table(columns: List[Dict], rows: List[Dict], additional_classes: str = ''):
     return table
 
 
-def dialog(title: str = ''):
+def dialog(title: str = '', additional_classes: str = ''):
     """Create a shadcn-style dialog/modal
 
     Args:
         title: Dialog title (optional)
+        additional_classes: Additional Tailwind classes
 
     Returns:
         ui.dialog object that can be used with context manager
@@ -229,7 +234,7 @@ def dialog(title: str = ''):
     """
     dialog = ui.dialog()
 
-    with dialog, ui.card().classes('p-6 min-w-96 max-w-2xl'):
+    with dialog, ui.card().classes(f'p-6 min-w-96 max-w-2xl {additional_classes}'.strip()):
         if title:
             heading(title, level=3, color='text-slate-900')
             ui.separator().classes('my-4')
@@ -274,7 +279,8 @@ def avatar(
     fallback_text: str = '',
     size: str = 'md',
     variant: str = 'circle',
-    font_family: Optional[str] = None
+    font_family: Optional[str] = None,
+    additional_classes: str = ''
 ):
     """Create a shadcn-style avatar
 
@@ -284,6 +290,7 @@ def avatar(
         size: 'sm', 'md', 'lg', 'xl' (default: 'md')
         variant: 'circle' or 'square' (default: 'circle')
         font_family: Optional custom font family (overrides global font)
+        additional_classes: Additional Tailwind classes
 
     Returns:
         The NiceGUI element containing the avatar
@@ -307,7 +314,7 @@ def avatar(
     shape_class = 'rounded-full' if variant == 'circle' else 'rounded-md'
 
     # Base classes
-    base_classes = f'inline-flex items-center justify-center overflow-hidden bg-slate-100 {shape_class} {size_classes.get(size, size_classes["md"])}'
+    base_classes = f'inline-flex items-center justify-center overflow-hidden bg-slate-100 {shape_class} {size_classes.get(size, size_classes["md"])} {additional_classes}'.strip()
 
     font = font_family or FontConfig.get_font()
 
@@ -361,7 +368,7 @@ def calendar(on_change=None, value=None, additional_classes: str = ''):
     return date_picker
 
 
-def barchart(data: Dict[str, int], title: str = '', height: int = 400, label: str = 'Count'):
+def barchart(data: Dict[str, int], title: str = '', height: int = 400, label: str = 'Count', additional_classes: str = ''):
     """Create a shadcn-style bar chart
 
     Args:
@@ -369,6 +376,7 @@ def barchart(data: Dict[str, int], title: str = '', height: int = 400, label: st
         title: Chart title
         height: Chart height in pixels
         label: Label for the value in tooltip (default: 'Count')
+        additional_classes: Additional Tailwind classes
     """
     categories = list(data.keys())
     values = list(data.values())
@@ -432,11 +440,11 @@ def barchart(data: Dict[str, int], title: str = '', height: int = 400, label: st
     )
 
     # Create chart in a card with shadcn styling
-    with ui.card().classes('w-full p-6'):
+    with ui.card().classes(f'w-full p-6 {additional_classes}'.strip()):
         ui.plotly(fig).classes('w-full')
 
 
-def timeseries(dates: List[str], values: List[int], title: str = '', height: int = 400, line_color: str = '#0f172a', smooth: bool = True, label: str = 'Count'):
+def timeseries(dates: List[str], values: List[int], title: str = '', height: int = 400, line_color: str = '#0f172a', smooth: bool = True, label: str = 'Count', additional_classes: str = ''):
     """Create a shadcn-style timeseries chart
 
     Args:
@@ -447,6 +455,7 @@ def timeseries(dates: List[str], values: List[int], title: str = '', height: int
         line_color: Line color (default: slate-900)
         smooth: Use smooth curves (True) or straight lines (False)
         label: Label for the value in tooltip (default: 'Count')
+        additional_classes: Additional Tailwind classes
     """
     # Create line chart with shadcn-inspired styling
     fig = go.Figure(data=[
@@ -518,11 +527,11 @@ def timeseries(dates: List[str], values: List[int], title: str = '', height: int
     )
 
     # Create chart in a card with shadcn styling
-    with ui.card().classes('w-full p-6'):
+    with ui.card().classes(f'w-full p-6 {additional_classes}'.strip()):
         ui.plotly(fig).classes('w-full')
 
 
-def accordion(items: List[Dict[str, str]], width: str = 'w-full', variant: str = 'default', font_family: Optional[str] = None):
+def accordion(items: List[Dict[str, str]], width: str = 'w-full', variant: str = 'default', font_family: Optional[str] = None, additional_classes: str = ''):
     """Create a shadcn-style accordion component with multiple expandable items.
 
     Args:
@@ -531,6 +540,7 @@ def accordion(items: List[Dict[str, str]], width: str = 'w-full', variant: str =
         width: Width classes (default: 'w-full')
         variant: 'default', 'bordered', 'separated' (default: 'default')
         font_family: Optional custom font family (overrides global font)
+        additional_classes: Additional Tailwind classes
 
     Returns:
         The container element with all accordion items
@@ -552,7 +562,7 @@ def accordion(items: List[Dict[str, str]], width: str = 'w-full', variant: str =
 
     container_class = 'default' if variant == 'default' else ''
 
-    with ui.column().classes(f'{width} {container_class}'.strip()) as container:
+    with ui.column().classes(f'{width} {container_class} {additional_classes}'.strip()) as container:
         for item in items:
             title = item.get('title', '')
             content = item.get('content', '')

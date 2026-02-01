@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "shadcn-nicegui"
-version = "0.2.7"
+version = "0.2.8"
 description = "Shadcn-style UI components for NiceGUI"
 readme = "README.md"
 requires-python = ">=3.8"
