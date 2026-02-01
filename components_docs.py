@@ -201,7 +201,7 @@ def show_card_docs():
         card(width='w-80', padding='p-6', variant='default').__exit__(None, None, None)
     ))
 
-    # Installation  
+    # Installation
     show_installation_section()
 
     # Usage
@@ -214,22 +214,22 @@ with card(width='w-80', padding='p-6'):
 
     # Examples
     section_heading('Examples')
-    
+
     subsection_heading('Variants')
     with card(width='w-full', padding='p-6', variant='outlined'):
         with ui.row().classes('gap-4 flex-wrap'):
             with card(width='w-60', padding='p-4', variant='default'):
                 ui.label('Default').classes('font-semibold')
                 ui.label('Subtle shadow').classes('text-sm text-slate-600 mt-1')
-            
+
             with card(width='w-60', padding='p-4', variant='outlined'):
                 ui.label('Outlined').classes('font-semibold')
                 ui.label('Border, no shadow').classes('text-sm text-slate-600 mt-1')
-            
+
             with card(width='w-60', padding='p-4', variant='elevated'):
                 ui.label('Elevated').classes('font-semibold')
                 ui.label('Prominent shadow').classes('text-sm text-slate-600 mt-1')
-    
+
     create_code_block('''card(variant='default')
 card(variant='outlined')
 card(variant='elevated')
