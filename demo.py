@@ -1,4 +1,6 @@
 """Comprehensive demo showcasing all shadcn-nicegui components."""
+import tomllib
+from pathlib import Path
 from nicegui import ui
 from shadcn_nicegui import (
     button,
@@ -18,6 +20,11 @@ from shadcn_nicegui import (
     timeseries,
     set_global_font,
 )
+
+# Read version from pyproject.toml
+with open(Path(__file__).parent / 'pyproject.toml', 'rb') as f:
+    pyproject = tomllib.load(f)
+    VERSION = pyproject['project']['version']
 
 
 def main():
@@ -40,7 +47,7 @@ def main():
 
         # Hero Section
         with ui.column().classes('w-full max-w-5xl mx-auto px-8 py-24 items-center text-center gap-6'):
-            badge('v0.2.0', variant='outline')
+            badge(f'v{VERSION}', variant='outline')
 
             ui.label('Build your component library.').classes('text-5xl font-bold tracking-tight')
 

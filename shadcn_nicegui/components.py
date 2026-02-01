@@ -212,6 +212,9 @@ def table(columns: List[Dict], rows: List[Dict], additional_classes: str = ''):
     # Apply shadcn styling via props
     table.props('flat bordered separator="none"')
 
+    # Add darker bottom border for headers
+    table.style('thead { border-bottom: 2px solid rgb(15 23 42) !important; }')
+
     return table
 
 
