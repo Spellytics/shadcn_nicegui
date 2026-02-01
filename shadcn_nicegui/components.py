@@ -206,13 +206,13 @@ def card(
 
     variant_class = variant_classes.get(variant, variant_classes['default'])
     classes = f'{base_classes} {variant_class} {width} {margin} {padding} {additional_classes}'.strip()
-    
+
     card_element = ui.card().classes(classes)
-    
+
     # If title, subtitle, or content provided, create structured card
     if title or subtitle or card_content:
         font = font_family or FontConfig.get_font()
-        
+
         with card_element:
             if title or subtitle:
                 with ui.column().classes('gap-1 mb-4'):
@@ -222,11 +222,11 @@ def card(
                     if subtitle:
                         subtitle_label = ui.label(subtitle).classes('text-sm text-slate-600')
                         subtitle_label.style(f'font-family: {font}')
-            
+
             if card_content:
                 content_label = ui.label(card_content).classes('text-sm text-slate-700')
                 content_label.style(f'font-family: {font}')
-    
+
     return card_element
 
 
