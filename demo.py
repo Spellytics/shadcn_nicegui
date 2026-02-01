@@ -114,13 +114,13 @@ def main():
                         ui.label('Card').classes('text-2xl font-semibold')
                         ui.label('Displays content in a contained box with optional variants.').classes('text-sm text-slate-600')
 
-                with ui.row().classes('w-full gap-4 flex-wrap'):
+                with ui.row().classes('w-full gap-6 flex-wrap'):
                     with card(width='w-64', padding='p-6', variant='default'):
                         ui.label('Default').classes('text-lg font-semibold')
                         ui.label('Subtle shadow with white background').classes('text-sm text-slate-600 mt-2')
 
-                    with card(width='w-64', padding='p-6', variant='outlined'):
-                        ui.label('Outlined').classes('text-lg font-semibold')
+                    with card(width='w-64', padding='p-6', variant='dashed'):
+                        ui.label('Dashed').classes('text-lg font-semibold')
                         ui.label('Border with no shadow').classes('text-sm text-slate-600 mt-2')
 
                     with card(width='w-64', padding='p-6', variant='elevated'):

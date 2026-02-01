@@ -158,15 +158,40 @@ def heading(text: str, level: int = 3, color: str = 'text-black', font_family: O
     heading.style(f'font-family: {font}')
 
 
-def card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str = 'p-8', additional_classes: str = '', variant: str = 'default'):
+def card(
+    width: str = 'w-full max-w-4xl',
+    margin: str = 'mx-auto',
+    padding: str = 'p-2',
+    additional_classes: str = '',
+    variant: str = 'default',
+    title: Optional[str] = None,
+    subtitle: Optional[str] = None,
+    card_content: Optional[str] = None,
+    font_family: Optional[str] = None
+):
     """Create a shadcn-style card container
 
     Args:
         width: Width classes (default: 'w-full max-w-4xl')
         margin: Margin classes (default: 'mx-auto')
-        padding: Padding classes (default: 'p-8')
+        padding: Padding classes (default: 'p-2')
         additional_classes: Additional Tailwind classes
-        variant: 'default', 'outlined', 'elevated', 'ghost' (default: 'default')
+        variant: 'default', 'dashed', 'elevated', 'ghost' (default: 'default')
+        title: Optional card title
+        subtitle: Optional card subtitle
+        card_content: Optional card content text
+        font_family: Optional custom font family (overrides global font)
+
+    Returns:
+        The card element (use as context manager if title/subtitle/content not provided)
+
+    Example:
+        # Simple card with context manager
+        with card():
+            ui.label('Custom content')
+
+        # Card with title and content
+        card(title='My Card', subtitle='Description', card_content='Content here')
     """
     # Base card classes
     base_classes = 'rounded-lg bg-white'
@@ -174,14 +199,35 @@ def card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str 
     # Variant-specific classes
     variant_classes = {
         'default': 'border border-slate-200 shadow-none',
-        'outlined': 'border border-slate-200 shadow-none',
-        'elevated': 'shadow-lg',
+        'dashed': 'border border-dashed border-slate-400 shadow-none',
+        'elevated': 'border border-slate-200 shadow-md',
         'ghost': 'shadow-none',
     }
 
     variant_class = variant_classes.get(variant, variant_classes['default'])
     classes = f'{base_classes} {variant_class} {width} {margin} {padding} {additional_classes}'.strip()
-    return ui.card().classes(classes)
+    
+    card_element = ui.card().classes(classes)
+    
+    # If title, subtitle, or content provided, create structured card
+    if title or subtitle or card_content:
+        font = font_family or FontConfig.get_font()
+        
+        with card_element:
+            if title or subtitle:
+                with ui.column().classes('gap-1 mb-4'):
+                    if title:
+                        title_label = ui.label(title).classes('text-lg font-semibold text-slate-900')
+                        title_label.style(f'font-family: {font}')
+                    if subtitle:
+                        subtitle_label = ui.label(subtitle).classes('text-sm text-slate-600')
+                        subtitle_label.style(f'font-family: {font}')
+            
+            if card_content:
+                content_label = ui.label(card_content).classes('text-sm text-slate-700')
+                content_label.style(f'font-family: {font}')
+    
+    return card_element
 
 
 def expandable(text: str, width: str = 'w-full', additional_classes: str = ''):
@@ -323,7 +369,7 @@ def avatar(
     shape_class = 'rounded-full' if variant == 'circle' else 'rounded-md'
 
     # Base classes
-    base_classes = f'inline-flex items-center justify-center overflow-hidden bg-slate-100 {shape_class} {size_classes.get(size, size_classes["md"])} {additional_classes}'.strip()
+    base_classes = f'inline-flex items-center justify-center overflow-hidden bg-slate-100 border border-slate-200 {shape_class} {size_classes.get(size, size_classes["md"])} {additional_classes}'.strip()
 
     font = font_family or FontConfig.get_font()
 
@@ -564,14 +610,12 @@ def accordion(items: List[Dict[str, str]], width: str = 'w-full', variant: str =
 
     # Variant-specific classes
     variant_classes = {
-        'default': 'border-b border-slate-200',
-        'bordered': 'border border-slate-200 rounded-lg mb-2',
-        'separated': 'mb-4 border border-slate-200 rounded-lg shadow-sm',
+        'default': 'w-full border-b border-slate-200',
+        'bordered': 'w-full border border-slate-200 rounded-lg mb-2',
+        'separated': 'w-full mb-4 border border-slate-200 rounded-lg shadow-sm',
     }
 
-    container_class = 'default' if variant == 'default' else ''
-
-    with ui.column().classes(f'{width} {container_class} {additional_classes}'.strip()) as container:
+    with ui.column().classes(f'{width} {additional_classes}'.strip()) as container:
         for item in items:
             title = item.get('title', '')
             content = item.get('content', '')
