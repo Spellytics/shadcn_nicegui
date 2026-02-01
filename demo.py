@@ -27,33 +27,47 @@ def main():
 
     @ui.page('/')
     def index():
-        # Header
-        with ui.row().classes('w-full bg-slate-900 p-6 items-center justify-between'):
-            with ui.row().classes('items-center gap-4'):
-                ui.label('⚡').classes('text-4xl')
-                with ui.column().classes('gap-0'):
-                    ui.label('Shadcn NiceGUI').classes('text-2xl font-bold text-white')
-                    ui.label('Beautiful UI components for NiceGUI').classes('text-sm text-slate-300')
+        # Navigation Bar
+        with ui.row().classes('w-full border-b border-slate-200 bg-white px-8 py-4 items-center justify-between sticky top-0 z-50'):
+            with ui.row().classes('items-center gap-2'):
+                ui.label('shadcn/nicegui').classes('text-lg font-semibold')
 
-            with ui.row().classes('gap-2'):
-                badge('v0.2.0', variant='secondary')
-                badge('Open Source', variant='success')
+            with ui.row().classes('gap-6 items-center'):
+                ui.link('Docs', '#docs').classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
+                ui.link('Components', '#components').classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
+                ui.link('Examples', '#examples').classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
+                ui.link('GitHub', 'https://github.com/Spellytics/shadcn_nicegui', new_tab=True).classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
+
+        # Hero Section
+        with ui.column().classes('w-full max-w-5xl mx-auto px-8 py-24 items-center text-center gap-6'):
+            badge('v0.2.0', variant='outline')
+
+            ui.label('Build your component library.').classes('text-5xl font-bold tracking-tight')
+
+            ui.label('Beautifully designed components built with NiceGUI and Tailwind CSS. Copy, paste, and customize.').classes('text-xl text-slate-600 max-w-2xl')
+
+            with ui.row().classes('gap-4 mt-4'):
+                button('Get Started', variant='default', size='lg', on_click=lambda: ui.notify('Ready to build! 🚀'))
+                ui.link('GitHub', 'https://github.com/Spellytics/shadcn_nicegui', new_tab=True).classes('inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-11 px-8 border border-slate-300 bg-white hover:bg-slate-100 hover:text-slate-900 text-black no-underline')
+
+        # Features Section
+        with ui.column().classes('w-full bg-slate-50 border-y border-slate-200'):
+            with ui.column().classes('w-full max-w-5xl mx-auto px-8 py-16 gap-12'):
+                with ui.row().classes('w-full gap-8 justify-between flex-wrap'):
+                    with ui.column().classes('flex-1 min-w-[250px] gap-2'):
+                        ui.label('Accessible').classes('text-lg font-semibold')
+                        ui.label('Built with accessibility in mind. Keyboard navigation and screen reader support.').classes('text-sm text-slate-600')
+
+                    with ui.column().classes('flex-1 min-w-[250px] gap-2'):
+                        ui.label('Customizable').classes('text-lg font-semibold')
+                        ui.label('Easily customize components with Tailwind CSS utility classes.').classes('text-sm text-slate-600')
+
+                    with ui.column().classes('flex-1 min-w-[250px] gap-2'):
+                        ui.label('Open Source').classes('text-lg font-semibold')
+                        ui.label('Free and open source. Use it however you like.').classes('text-sm text-slate-600')
 
         # Main content
-        with ui.column().classes('w-full max-w-7xl mx-auto p-8 gap-8'):
-
-            # Introduction
-            with card(width='w-full', padding='p-8'):
-                heading('Welcome to Shadcn NiceGUI', level=1)
-                ui.label('A collection of beautiful Shadcn-style UI components built for NiceGUI. Clean, modern, and easy to use.').classes('text-lg text-slate-600 mt-2')
-
-                separator(additional_classes='my-6')
-
-                with ui.row().classes('gap-2'):
-                    button('Get Started', variant='default', on_click=lambda: ui.notify('Ready to build! 🚀'))
-                    ui.link('View on GitHub', 'https://github.com/Spellytics/shadcn_nicegui', new_tab=True).classes('inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 border border-slate-300 bg-white hover:bg-slate-100 hover:text-slate-900 text-black no-underline')
-
-            # Buttons Section
+        with ui.column().classes('w-full max-w-5xl mx-auto px-8 py-16 gap-24'):
             with card(width='w-full', padding='p-8'):
                 heading('Buttons', level=2)
                 ui.label('Different button variants and sizes').classes('text-slate-600 mt-2')
@@ -74,139 +88,89 @@ def main():
                     button('Default', variant='default', size='default')
                     button('Large', variant='default', size='lg')
 
-            # Form Inputs Section
-            with card(width='w-full', padding='p-8'):
-                heading('Form Inputs', level=2)
-                ui.label('Text inputs and selects with labels').classes('text-slate-600 mt-2')
+# Input Examples
+            with ui.column().classes('w-full gap-6 mt-16'):
+                with ui.row().classes('w-full items-center justify-between'):
+                    with ui.column().classes('gap-1'):
+                        ui.label('Input').classes('text-2xl font-semibold')
+                        ui.label('A form input field for text entry.').classes('text-sm text-slate-600')
 
-                separator(additional_classes='my-4')
-
-                with ui.column().classes('gap-4 max-w-md mt-4'):
-                    input(label='Name', placeholder='Enter your name')
-                    input(label='Email', placeholder='you@example.com')
-                    select(['Option 1', 'Option 2', 'Option 3'], label='Select an option', value='Option 1')
-
-                    with ui.row().classes('gap-2'):
-                        button('Submit', variant='default')
-                        button('Cancel', variant='outline')
+                with card(width='w-full', padding='p-8', additional_classes='border border-slate-200'):
+                    with ui.column().classes('gap-4 max-w-sm'):
+                        input(label='Email', placeholder='Email')
+                        input(label='Password', placeholder='Password')
 
             # Badges & Avatars Section
             with card(width='w-full', padding='p-8'):
                 heading('Badges & Avatars', level=2)
                 ui.label('Status indicators and user avatars').classes('text-slate-600 mt-2')
+# Badge Examples
+            with ui.column().classes('w-full gap-6 mt-16'):
+                with ui.row().classes('w-full items-center justify-between'):
+                    with ui.column().classes('gap-1'):
+                        ui.label('Badge').classes('text-2xl font-semibold')
+                        ui.label('Displays a badge or a component that looks like a badge.').classes('text-sm text-slate-600')
 
-                separator(additional_classes='my-4')
+                with card(width='w-full', padding='p-8', additional_classes='border border-slate-200'):
+                    with ui.row().classes('gap-2 flex-wrap'):
+                        badge('Default', variant='default')
+                        badge('Secondary', variant='secondary')
+                        badge('Outline', variant='outline')
+                        badge('Destructive', variant='destructive')
 
-                ui.label('Badge Variants').classes('font-semibold text-sm text-slate-900 mt-4')
-                with ui.row().classes('gap-2 mt-2 flex-wrap'):
-                    badge('Default', variant='default')
-                    badge('Secondary', variant='secondary')
-                    badge('Success', variant='success')
-                    badge('Destructive', variant='destructive')
-                    badge('Outline', variant='outline')
+            # Avatar Examples
+            with ui.column().classes('w-full gap-6 mt-16'):
+                with ui.row().classes('w-full items-center justify-between'):
+                    with ui.column().classes('gap-1'):
+                        ui.label('Avatar').classes('text-2xl font-semibold')
+                        ui.label('An image element with a fallback for representing the user.').classes('text-sm text-slate-600')
 
-                ui.label('Avatars').classes('font-semibold text-sm text-slate-900 mt-6')
-                with ui.row().classes('gap-4 mt-2 items-center flex-wrap'):
-                    avatar(fallback_text='JD', size='sm')
-                    avatar(fallback_text='AB', size='md')
-                    avatar(fallback_text='MK', size='lg')
-                    avatar(fallback_text='SP', size='xl')
-
-                ui.label('With Images').classes('font-semibold text-sm text-slate-900 mt-6')
-                with ui.row().classes('gap-4 mt-2 flex-wrap'):
-                    avatar(image_url='https://picsum.photos/seed/demo1/200', size='md')
-                    avatar(image_url='https://picsum.photos/seed/demo2/200', size='md')
-                    avatar(image_url='https://picsum.photos/seed/demo3/200', size='md')
-                    avatar(fallback_text='JD', size='md', variant='square')
-
-            # Dialog Section
-            with card(width='w-full', padding='p-8'):
-                heading('Dialogs', level=2)
+                with card(width='w-full', padding='p-8', additional_classes='border border-slate-200'):
+                    with ui.row().classes('gap-4 items-center flex-wrap'):
+                        avatar(image_url='https://picsum.photos/seed/demo1/200', size='lg')
+                        avatar(fallback_text='AB', size='lg')
+                        avatar(fallback_text='CD', size='lg', variant='square')
                 ui.label('Modal dialogs for confirmations and forms').classes('text-slate-600 mt-2')
 
                 separator(additional_classes='my-4')
+# Dialog Examples
+            with ui.column().classes('w-full gap-6 mt-16'):
+                with ui.row().classes('w-full items-center justify-between'):
+                    with ui.column().classes('gap-1'):
+                        ui.label('Dialog').classes('text-2xl font-semibold')
+                        ui.label('A window overlaid on either the primary window or another dialog.').classes('text-sm text-slate-600')
 
-                def show_dialog():
-                    with dialog(title='Confirm Action') as d:
-                        ui.label('Are you sure you want to proceed with this action?').classes('text-slate-700')
-                        with ui.row().classes('gap-2 mt-4 justify-end'):
-                            button('Cancel', on_click=d.close, variant='outline')
-                            button('Confirm', on_click=lambda: (ui.notify('Confirmed!', type='positive'), d.close()), variant='default')
-                        d.open()
+                with card(width='w-full', padding='p-8', additional_classes='border border-slate-200'):
+                    def show_dialog():
+                        with dialog(title='Are you absolutely sure?') as d:
+                            ui.label('This action cannot be undone. This will permanently delete your account and remove your data from our servers.').classes('text-sm text-slate-600')
+                            with ui.row().classes('gap-2 mt-6 justify-end'):
+                                button('Cancel', on_click=d.close, variant='outline')
+                                button('Continue', on_click=lambda: (ui.notify('Action confirmed', type='positive'), d.close()), variant='default')
+                            d.open()
 
-                button('Open Dialog', variant='default', on_click=show_dialog)
+                    button('Open Dialog', variant='outline', on_click=show_dialog)
+# Table Examples
+            with ui.column().classes('w-full gap-6 mt-16'):
+                with ui.row().classes('w-full items-center justify-between'):
+                    with ui.column().classes('gap-1'):
+                        ui.label('Table').classes('text-2xl font-semibold')
+                        ui.label('A responsive table component.').classes('text-sm text-slate-600')
 
-            # Table Section
-            with card(width='w-full', padding='p-8'):
-                heading('Data Table', level=2)
-                ui.label('Display structured data in tables').classes('text-slate-600 mt-2')
+                with card(width='w-full', padding='p-8', additional_classes='border border-slate-200'):
+                    columns = [
+                        {'name': 'name', 'label': 'Name', 'field': 'name', 'align': 'left'},
+                        {'name': 'email', 'label': 'Email', 'field': 'email', 'align': 'left'},
+                        {'name': 'role', 'label': 'Role', 'field': 'role', 'align': 'left'},
+                    ]
 
-                separator(additional_classes='my-4')
+                    rows = [
+                        {'id': 1, 'name': 'John Doe', 'email': 'john@example.com', 'role': 'Admin'},
+                        {'id': 2, 'name': 'Jane Smith', 'email': 'jane@example.com', 'role': 'User'},
+                        {'id': 3, 'name': 'Bob Johnson', 'email': 'bob@example.com', 'role': 'User'},
+                    ]
 
-                columns = [
-                    {'name': 'id', 'label': 'ID', 'field': 'id', 'align': 'left'},
-                    {'name': 'name', 'label': 'Name', 'field': 'name', 'align': 'left'},
-                    {'name': 'email', 'label': 'Email', 'field': 'email', 'align': 'left'},
-                    {'name': 'role', 'label': 'Role', 'field': 'role', 'align': 'left'},
-                ]
-
-                rows = [
-                    {'id': 1, 'name': 'John Doe', 'email': 'john@example.com', 'role': 'Admin'},
-                    {'id': 2, 'name': 'Jane Smith', 'email': 'jane@example.com', 'role': 'User'},
-                    {'id': 3, 'name': 'Bob Johnson', 'email': 'bob@example.com', 'role': 'User'},
-                    {'id': 4, 'name': 'Alice Williams', 'email': 'alice@example.com', 'role': 'Manager'},
-                ]
-
-                table(columns=columns, rows=rows)
-
-            # Expandable Section
-            with card(width='w-full', padding='p-8'):
-                heading('Expandable Sections', level=2)
-                ui.label('Accordion-style collapsible content').classes('text-slate-600 mt-2')
-
-                separator(additional_classes='my-4')
-
-                with expandable('Getting Started', width='w-full'):
-                    ui.label('Install the package with pip install shadcn-nicegui and start building beautiful UIs!')
-
-                with expandable('Features', width='w-full'):
-                    ui.label('• Beautiful Shadcn-style design\n• Easy to use API\n• Fully customizable\n• Font configuration support').classes('whitespace-pre-line')
-
-                with expandable('Documentation', width='w-full'):
-                    ui.label('Check out the README.md for full documentation and examples.')
-
-            # Charts Section
-            with card(width='w-full', padding='p-8'):
-                heading('Charts', level=2)
-                ui.label('Beautiful data visualizations with Plotly').classes('text-slate-600 mt-2')
-
-                separator(additional_classes='my-4')
-
-                # Bar chart
-                heading('Bar Chart', level=3)
-                data = {'Mon': 12, 'Tue': 19, 'Wed': 15, 'Thu': 25, 'Fri': 22, 'Sat': 18, 'Sun': 10}
-                barchart(data, title='Weekly Activity', height=300, label='Users')
-
-                # Time series
-                heading('Time Series', level=3)
-                ui.label('').classes('mt-8')
-                dates = ['2024-01-01', '2024-01-02', '2024-01-03', '2024-01-04', '2024-01-05', '2024-01-06', '2024-01-07']
-                values = [100, 150, 120, 180, 160, 200, 170]
-                timeseries(dates, values, title='Daily Traffic', height=300, label='Visitors')
-
-            # Calendar Section
-            with card(width='w-full', padding='p-8'):
-                heading('Date Picker', level=2)
-                ui.label('Select dates with a beautiful calendar').classes('text-slate-600 mt-2')
-
-                separator(additional_classes='my-4')
-
-                calendar(on_change=lambda e: ui.notify(f'Selected: {e.value}'))
-
-            # Footer
-            separator(additional_classes='my-8')
-
-            with ui.row().classes('w-full justify-center items-center gap-2 pb-8'):
+                    table(columns=columns, rows=rows)8'):
                 ui.label('Built with').classes('text-slate-600')
                 ui.label('❤️').classes('text-red-500')
                 ui.label('using').classes('text-slate-600')
@@ -224,3 +188,30 @@ def main():
 
 if __name__ in {"__main__", "__mp_main__"}:
     main()
+        with ui.column().classes('w-full border-t border-slate-200 bg-slate-50 mt-24'):
+            with ui.column().classes('w-full max-w-5xl mx-auto px-8 py-16 gap-8'):
+                with ui.row().classes('w-full justify-between flex-wrap gap-8'):
+                    with ui.column().classes('gap-4 flex-1 min-w-[200px]'):
+                        ui.label('shadcn/nicegui').classes('font-semibold text-lg')
+                        ui.label('Beautiful components for NiceGUI.').classes('text-sm text-slate-600')
+
+                    with ui.column().classes('gap-3 min-w-[150px]'):
+                        ui.label('Resources').classes('font-semibold text-sm')
+                        ui.link('Documentation', '#docs').classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
+                        ui.link('Components', '#components').classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
+                        ui.link('Examples', '#examples').classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
+
+                    with ui.column().classes('gap-3 min-w-[150px]'):
+                        ui.label('Community').classes('font-semibold text-sm')
+                        ui.link('GitHub', 'https://github.com/Spellytics/shadcn_nicegui', new_tab=True).classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
+                        ui.link('Issues', 'https://github.com/Spellytics/shadcn_nicegui/issues', new_tab=True).classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
+
+                separator()
+
+                with ui.row().classes('w-full justify-between items-center'):
+                    ui.label('© 2026 shadcn/nicegui. MIT License.').classes('text-sm text-slate-600')
+                    with ui.row().classes('gap-2 items-center'):
+                        ui.label('Built with').classes('text-sm text-slate-600')
+                        badge('NiceGUI', variant='outline')
+                        ui.label('and').classes('text-sm text-slate-600')
+                        badge('Tailwind', variant='outline')
