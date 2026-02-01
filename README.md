@@ -37,8 +37,9 @@ ui.run()
 - `input` - Input fields
 - `select` - Select/dropdown fields
 - `heading` - Headings (h1-h6)
-- `card` - Card containers
-- `expandable` - Accordion/expandable sections
+- `card` - Card containers with variants (default, outlined, elevated, ghost)
+- `expandable` - Simple expandable sections
+- `accordion` - Multi-item accordion with variants (default, bordered, separated)
 - `table` - Data tables
 - `dialog` - Modal dialogs
 - `badge` - Badges
@@ -50,6 +51,18 @@ ui.run()
 - `set_global_font` - Configure font family globally
 
 ## Examples
+
+### Accordion
+
+```python
+from shadcn_nicegui import accordion
+
+accordion([
+    {'title': 'Is it accessible?', 'content': 'Yes. It adheres to the WAI-ARIA design pattern.'},
+    {'title': 'Is it styled?', 'content': 'Yes. It comes with default styles.'},
+    {'title': 'Is it animated?', 'content': 'Yes. The expansion is smoothly animated.'},
+], variant='default')
+```
 
 ### Button Variants
 

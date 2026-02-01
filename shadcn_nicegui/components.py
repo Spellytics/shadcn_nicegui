@@ -520,3 +520,55 @@ def timeseries(dates: List[str], values: List[int], title: str = '', height: int
     # Create chart in a card with shadcn styling
     with ui.card().classes('w-full p-6'):
         ui.plotly(fig).classes('w-full')
+
+
+def accordion(items: List[Dict[str, str]], width: str = 'w-full', variant: str = 'default', font_family: Optional[str] = None):
+    """Create a shadcn-style accordion component with multiple expandable items.
+
+    Args:
+        items: List of accordion items, each with 'title' and 'content' keys
+               Example: [{'title': 'Item 1', 'content': 'Content 1'}, ...]
+        width: Width classes (default: 'w-full')
+        variant: 'default', 'bordered', 'separated' (default: 'default')
+        font_family: Optional custom font family (overrides global font)
+
+    Returns:
+        The container element with all accordion items
+
+    Example:
+        accordion([
+            {'title': 'Is it accessible?', 'content': 'Yes. It adheres to the WAI-ARIA design pattern.'},
+            {'title': 'Is it styled?', 'content': 'Yes. It comes with default styles.'},
+        ])
+    """
+    font = font_family or FontConfig.get_font()
+
+    # Variant-specific classes
+    variant_classes = {
+        'default': 'border-b border-slate-200',
+        'bordered': 'border border-slate-200 rounded-lg mb-2',
+        'separated': 'mb-4 border border-slate-200 rounded-lg shadow-sm',
+    }
+
+    container_class = 'default' if variant == 'default' else ''
+
+    with ui.column().classes(f'{width} {container_class}'.strip()) as container:
+        for item in items:
+            title = item.get('title', '')
+            content = item.get('content', '')
+
+            item_classes = variant_classes.get(variant, variant_classes['default'])
+
+            with ui.expansion(title, icon='').classes(item_classes) as exp:
+                # Style the expansion header
+                exp._props['header-class'] = 'text-sm font-medium hover:no-underline'
+
+                # Add content
+                with ui.column().classes('pb-4 pt-0'):
+                    content_label = ui.label(content).classes('text-sm text-slate-600')
+                    content_label.style(f'font-family: {font}')
+
+                # Apply font to expansion header
+                exp.style(f'font-family: {font}')
+
+    return container

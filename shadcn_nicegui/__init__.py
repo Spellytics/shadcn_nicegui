@@ -1,6 +1,6 @@
 """Shadcn-style UI components for NiceGUI."""
 
-__version__ = "0.2.3"
+__version__ = "0.2.4"
 
 from .components import (
     button,
@@ -9,6 +9,7 @@ from .components import (
     heading,
     card,
     expandable,
+    accordion,
     table,
     dialog,
     badge,
@@ -27,6 +28,7 @@ __all__ = [
     "heading",
     "card",
     "expandable",
+    "accordion",
     "table",
     "dialog",
     "badge",

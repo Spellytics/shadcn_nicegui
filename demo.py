@@ -7,6 +7,7 @@ from shadcn_nicegui import (
     heading,
     card,
     expandable,
+    accordion,
     table,
     dialog,
     badge,
@@ -157,6 +158,29 @@ def main():
                 ui.label('Modal dialogs for confirmations and forms').classes('text-slate-600 mt-2')
 
                 separator(additional_classes='my-4')
+# Accordion Examples
+            with ui.column().classes('w-full gap-6 mt-16'):
+                with ui.row().classes('w-full items-center justify-between'):
+                    with ui.column().classes('gap-1'):
+                        ui.label('Accordion').classes('text-2xl font-semibold')
+                        ui.label('A vertically stacked set of interactive headings that reveal content.').classes('text-sm text-slate-600')
+
+                with card(width='w-full', padding='p-8', additional_classes='border border-slate-200'):
+                    accordion([
+                        {
+                            'title': 'Is it accessible?',
+                            'content': 'Yes. It adheres to the WAI-ARIA design pattern.'
+                        },
+                        {
+                            'title': 'Is it styled?',
+                            'content': 'Yes. It comes with default styles that match the shadcn design system.'
+                        },
+                        {
+                            'title': 'Is it animated?',
+                            'content': 'Yes. It\'s animated by default, but you can disable it if you prefer.'
+                        },
+                    ], variant='default')
+
 # Dialog Examples
             with ui.column().classes('w-full gap-6 mt-16'):
                 with ui.row().classes('w-full items-center justify-between'):
