@@ -38,7 +38,7 @@ def set_global_font(font_family: str):
     FontConfig.set_font(font_family)
 
 
-def shadcn_button(text: str, on_click=None, variant='default', size='default', icon=None, font_family: Optional[str] = None):
+def button(text: str, on_click=None, variant='default', size='default', icon=None, font_family: Optional[str] = None):
     """Create a shadcn-style button
 
     Args:
@@ -82,7 +82,7 @@ def shadcn_button(text: str, on_click=None, variant='default', size='default', i
     return btn
 
 
-def shadcn_input(label: str = '', placeholder: str = '', value: str = '', font_family: Optional[str] = None):
+def input(label: str = '', placeholder: str = '', value: str = '', font_family: Optional[str] = None):
     """Create a shadcn-style input field
 
     Args:
@@ -106,7 +106,7 @@ def shadcn_input(label: str = '', placeholder: str = '', value: str = '', font_f
     return input_field
 
 
-def shadcn_select(options: list, label: str = '', value=None, font_family: Optional[str] = None):
+def select(options: list, label: str = '', value=None, font_family: Optional[str] = None):
     """Create a shadcn-style select field
 
     Args:
@@ -130,7 +130,7 @@ def shadcn_select(options: list, label: str = '', value=None, font_family: Optio
     return select_field
 
 
-def shadcn_heading(text: str, level: int = 3, color: str = 'text-black', font_family: Optional[str] = None):
+def heading(text: str, level: int = 3, color: str = 'text-black', font_family: Optional[str] = None):
     """Create a shadcn-style heading
 
     Args:
@@ -154,7 +154,7 @@ def shadcn_heading(text: str, level: int = 3, color: str = 'text-black', font_fa
     heading.style(f'font-family: {font}')
 
 
-def shadcn_card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str = 'p-8', additional_classes: str = ''):
+def card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str = 'p-8', additional_classes: str = ''):
     """Create a shadcn-style card container
 
     Args:
@@ -167,7 +167,7 @@ def shadcn_card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', paddin
     return ui.card().classes(classes)
 
 
-def shadcn_expandable(text: str, width: str = 'w-full', additional_classes: str = ''):
+def expandable(text: str, width: str = 'w-full', additional_classes: str = ''):
     """Create a shadcn-style expandable/accordion component
 
     Args:
@@ -179,7 +179,7 @@ def shadcn_expandable(text: str, width: str = 'w-full', additional_classes: str 
     return ui.expansion(text).classes(classes)
 
 
-def shadcn_table(columns: List[Dict], rows: List[Dict], additional_classes: str = ''):
+def table(columns: List[Dict], rows: List[Dict], additional_classes: str = ''):
     """Create a shadcn-style table
 
     Args:
@@ -198,7 +198,7 @@ def shadcn_table(columns: List[Dict], rows: List[Dict], additional_classes: str 
     return table
 
 
-def shadcn_dialog(title: str = ''):
+def dialog(title: str = ''):
     """Create a shadcn-style dialog/modal
 
     Args:
@@ -208,17 +208,17 @@ def shadcn_dialog(title: str = ''):
         ui.dialog object that can be used with context manager
 
     Example:
-        with shadcn_dialog('Confirm Action') as dialog:
+        with dialog('Confirm Action') as dialog:
             ui.label('Are you sure?')
             with ui.row():
-                shadcn_button('Cancel', on_click=dialog.close, variant='outline')
-                shadcn_button('Confirm', on_click=lambda: (do_action(), dialog.close()))
+                button('Cancel', on_click=dialog.close, variant='outline')
+                button('Confirm', on_click=lambda: (do_action(), dialog.close()))
     """
     dialog = ui.dialog()
 
     with dialog, ui.card().classes('p-6 min-w-96 max-w-2xl'):
         if title:
-            shadcn_heading(title, level=3, color='text-slate-900')
+            heading(title, level=3, color='text-slate-900')
             ui.separator().classes('my-4')
 
         # Content will be added by the context manager
@@ -227,7 +227,7 @@ def shadcn_dialog(title: str = ''):
     return dialog
 
 
-def shadcn_badge(text: str, variant: str = 'default', additional_classes: str = '', font_family: Optional[str] = None):
+def badge(text: str, variant: str = 'default', additional_classes: str = '', font_family: Optional[str] = None):
     """Create a shadcn-style badge
 
     Args:
@@ -256,7 +256,7 @@ def shadcn_badge(text: str, variant: str = 'default', additional_classes: str = 
     return badge
 
 
-def shadcn_avatar(
+def avatar(
     image_url: Optional[str] = None,
     fallback_text: str = '',
     size: str = 'md',
@@ -277,10 +277,10 @@ def shadcn_avatar(
 
     Example:
         # With image
-        shadcn_avatar(image_url='https://example.com/avatar.jpg')
+        avatar(image_url='https://example.com/avatar.jpg')
 
         # With fallback text
-        shadcn_avatar(fallback_text='JD', size='lg')
+        avatar(fallback_text='JD', size='lg')
     """
     # Size classes
     size_classes = {
@@ -310,7 +310,7 @@ def shadcn_avatar(
         return avatar_label
 
 
-def shadcn_separator(orientation: str = 'horizontal', additional_classes: str = ''):
+def separator(orientation: str = 'horizontal', additional_classes: str = ''):
     """Create a shadcn-style separator/divider
 
     Args:
@@ -325,7 +325,7 @@ def shadcn_separator(orientation: str = 'horizontal', additional_classes: str = 
     return ui.separator().classes(classes)
 
 
-def shadcn_calendar(on_change=None, value=None, additional_classes: str = ''):
+def calendar(on_change=None, value=None, additional_classes: str = ''):
     """Create a shadcn-style date picker/calendar
 
     Args:
@@ -337,7 +337,7 @@ def shadcn_calendar(on_change=None, value=None, additional_classes: str = ''):
         ui.date object
 
     Example:
-        calendar = shadcn_calendar(on_change=lambda e: print(e.value))
+        calendar = calendar(on_change=lambda e: print(e.value))
     """
     classes = f'w-full {additional_classes}'.strip()
 
@@ -348,7 +348,7 @@ def shadcn_calendar(on_change=None, value=None, additional_classes: str = ''):
     return date_picker
 
 
-def shadcn_barchart(data: Dict[str, int], title: str = '', height: int = 400, label: str = 'Count'):
+def barchart(data: Dict[str, int], title: str = '', height: int = 400, label: str = 'Count'):
     """Create a shadcn-style bar chart
 
     Args:
@@ -423,7 +423,7 @@ def shadcn_barchart(data: Dict[str, int], title: str = '', height: int = 400, la
         ui.plotly(fig).classes('w-full')
 
 
-def shadcn_timeseries(dates: List[str], values: List[int], title: str = '', height: int = 400, line_color: str = '#0f172a', smooth: bool = True, label: str = 'Count'):
+def timeseries(dates: List[str], values: List[int], title: str = '', height: int = 400, line_color: str = '#0f172a', smooth: bool = True, label: str = 'Count'):
     """Create a shadcn-style timeseries chart
 
     Args:
