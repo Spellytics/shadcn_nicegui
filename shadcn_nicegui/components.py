@@ -256,6 +256,60 @@ def shadcn_badge(text: str, variant: str = 'default', additional_classes: str = 
     return badge
 
 
+def shadcn_avatar(
+    image_url: Optional[str] = None,
+    fallback_text: str = '',
+    size: str = 'md',
+    variant: str = 'circle',
+    font_family: Optional[str] = None
+):
+    """Create a shadcn-style avatar
+
+    Args:
+        image_url: URL of the avatar image (if None, shows fallback text)
+        fallback_text: Text to show when image is not available (usually initials)
+        size: 'sm', 'md', 'lg', 'xl' (default: 'md')
+        variant: 'circle' or 'square' (default: 'circle')
+        font_family: Optional custom font family (overrides global font)
+
+    Returns:
+        The NiceGUI element containing the avatar
+
+    Example:
+        # With image
+        shadcn_avatar(image_url='https://example.com/avatar.jpg')
+
+        # With fallback text
+        shadcn_avatar(fallback_text='JD', size='lg')
+    """
+    # Size classes
+    size_classes = {
+        'sm': 'h-8 w-8 text-xs',
+        'md': 'h-10 w-10 text-sm',
+        'lg': 'h-12 w-12 text-base',
+        'xl': 'h-16 w-16 text-lg',
+    }
+
+    # Shape classes
+    shape_class = 'rounded-full' if variant == 'circle' else 'rounded-md'
+
+    # Base classes
+    base_classes = f'inline-flex items-center justify-center overflow-hidden bg-slate-100 {shape_class} {size_classes.get(size, size_classes["md"])}'
+
+    font = font_family or FontConfig.get_font()
+
+    if image_url:
+        # Create avatar with image
+        with ui.element('div').classes(base_classes) as avatar_container:
+            ui.image(image_url).classes('h-full w-full object-cover')
+        return avatar_container
+    else:
+        # Create avatar with fallback text
+        avatar_label = ui.label(fallback_text).classes(f'{base_classes} font-medium text-slate-600')
+        avatar_label.style(f'font-family: {font}')
+        return avatar_label
+
+
 def shadcn_separator(orientation: str = 'horizontal', additional_classes: str = ''):
     """Create a shadcn-style separator/divider
 

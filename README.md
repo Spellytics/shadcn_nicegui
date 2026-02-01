@@ -42,10 +42,12 @@ ui.run()
 - `shadcn_table` - Data tables
 - `shadcn_dialog` - Modal dialogs
 - `shadcn_badge` - Badges
+- `shadcn_avatar` - User avatars with image or fallback text
 - `shadcn_separator` - Dividers
 - `shadcn_calendar` - Date picker
 - `shadcn_barchart` - Bar charts (using Plotly)
 - `shadcn_timeseries` - Time series charts (using Plotly)
+- `set_global_font` - Configure font family globally
 
 ## Examples
 
@@ -70,7 +72,6 @@ with shadcn_card(width='w-full max-w-md'):
     shadcn_heading('Card Title', level=3)
     ui.label('This is card content')
 ```
-
 ### Charts
 
 ```python
@@ -84,6 +85,36 @@ shadcn_barchart(data, title='Monthly Sales')
 dates = ['2024-01-01', '2024-01-02', '2024-01-03']
 values = [100, 150, 120]
 shadcn_timeseries(dates, values, title='Daily Traffic')
+```
+
+### Avatars
+
+```python
+from shadcn_nicegui import shadcn_avatar
+
+# Avatar with image
+shadcn_avatar(image_url='https://example.com/avatar.jpg', size='lg')
+
+# Avatar with fallback text (initials)
+shadcn_avatar(fallback_text='JD', size='md')
+
+# Different sizes: 'sm', 'md', 'lg', 'xl'
+shadcn_avatar(fallback_text='AB', size='xl')
+
+# Different shapes: 'circle' (default) or 'square'
+shadcn_avatar(fallback_text='MK', size='lg', variant='square')
+```
+
+### Font Configuration
+
+```python
+from shadcn_nicegui import set_global_font, shadcn_button
+
+# Set global font for all components
+set_global_font('Roboto, sans-serif')
+
+# Override font for specific component
+shadcn_button('Click me', font_family='Arial, sans-serif')
 ```
 
 ## Development
