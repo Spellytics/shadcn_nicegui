@@ -20,13 +20,13 @@ pip install -e .
 
 ```python
 from nicegui import ui
-from shadcn_nicegui import shadcn_button, shadcn_card, shadcn_input
+from shadcn_nicegui import button, card, input, heading
 
 with ui.page('/'):
-    with shadcn_card():
-        shadcn_heading('Welcome', level=1)
-        shadcn_input(label='Name', placeholder='Enter your name')
-        shadcn_button('Submit', variant='default')
+    with card():
+        heading('Welcome', level=1)
+        input(label='Name', placeholder='Enter your name')
+        button('Submit', variant='default')
 
 ui.run()
 ```
