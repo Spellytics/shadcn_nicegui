@@ -133,6 +133,27 @@ black .
 ruff check .
 ```
 
+### Automatic Version Incrementing
+
+The repository includes an automatic version incrementing system using git hooks:
+
+- **`increment_version.py`**: Python script that increments the patch version (e.g., 0.2.0 → 0.2.1)
+- **`.git/hooks/pre-commit`**: Git hook that runs before each commit
+
+The pre-commit hook automatically:
+1. Increments the patch version in `__init__.py` and `pyproject.toml`
+2. Adds the modified files to the commit
+
+To manually increment the version:
+```bash
+python3 increment_version.py
+```
+
+To disable automatic version incrementing, remove or rename the pre-commit hook:
+```bash
+mv .git/hooks/pre-commit .git/hooks/pre-commit.disabled
+```
+
 ## License
 
 MIT License
