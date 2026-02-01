@@ -33,20 +33,20 @@ ui.run()
 
 ## Available Components
 
-- `shadcn_button` - Styled buttons with variants (default, destructive, outline, ghost, secondary)
-- `shadcn_input` - Input fields
-- `shadcn_select` - Select/dropdown fields
-- `shadcn_heading` - Headings (h1-h6)
-- `shadcn_card` - Card containers
-- `shadcn_expandable` - Accordion/expandable sections
-- `shadcn_table` - Data tables
-- `shadcn_dialog` - Modal dialogs
-- `shadcn_badge` - Badges
-- `shadcn_avatar` - User avatars with image or fallback text
-- `shadcn_separator` - Dividers
-- `shadcn_calendar` - Date picker
-- `shadcn_barchart` - Bar charts (using Plotly)
-- `shadcn_timeseries` - Time series charts (using Plotly)
+- `button` - Styled buttons with variants (default, destructive, outline, ghost, secondary)
+- `input` - Input fields
+- `select` - Select/dropdown fields
+- `heading` - Headings (h1-h6)
+- `card` - Card containers
+- `expandable` - Accordion/expandable sections
+- `table` - Data tables
+- `dialog` - Modal dialogs
+- `badge` - Badges
+- `avatar` - User avatars with image or fallback text
+- `separator` - Dividers
+- `calendar` - Date picker
+- `barchart` - Bar charts (using Plotly)
+- `timeseries` - Time series charts (using Plotly)
 - `set_global_font` - Configure font family globally
 
 ## Examples
