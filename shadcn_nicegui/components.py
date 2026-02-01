@@ -4,6 +4,152 @@ import plotly.graph_objects as go
 from typing import List, Dict, Optional
 
 
+# Theme Configuration
+class Theme:
+    """Theme color definitions for light and dark modes."""
+
+    LIGHT = {
+        # Backgrounds
+        'bg-primary': 'bg-white',
+        'bg-secondary': 'bg-slate-50',
+        'bg-accent': 'bg-slate-100',
+        'bg-muted': 'bg-slate-100',
+
+        # Text colors
+        'text-primary': 'text-slate-900',
+        'text-secondary': 'text-slate-600',
+        'text-muted': 'text-slate-500',
+        'text-inverse': 'text-white',
+
+        # Borders
+        'border-default': 'border-slate-200',
+        'border-strong': 'border-slate-300',
+        'border-muted': 'border-slate-100',
+
+        # Interactive states
+        'hover-bg': 'hover:bg-slate-100',
+        'hover-text': 'hover:text-slate-900',
+        'active-bg': 'bg-slate-900',
+        'active-text': 'text-slate-50',
+
+        # Component specific
+        'card-bg': 'bg-white',
+        'input-bg': 'bg-white',
+        'button-primary-bg': 'bg-slate-900',
+        'button-primary-hover': 'hover:bg-slate-800',
+        'button-secondary-bg': 'bg-slate-100',
+        'button-secondary-hover': 'hover:bg-slate-200',
+
+        # Destructive
+        'destructive-bg': 'bg-red-500',
+        'destructive-hover': 'hover:bg-red-600',
+
+        # Success
+        'success-bg': 'bg-green-500',
+        'success-hover': 'hover:bg-green-600',
+
+        # Raw color values (for Plotly and inline styles)
+        'raw-bg-primary': 'white',
+        'raw-text-primary': '#0f172a',
+        'raw-text-secondary': '#64748b',
+        'raw-border': '#e5e7eb',
+        'raw-grid': '#f3f4f6',
+        'raw-accent': '#0f172a',
+    }
+
+    DARK = {
+        # Backgrounds
+        'bg-primary': 'bg-slate-950',
+        'bg-secondary': 'bg-slate-900',
+        'bg-accent': 'bg-slate-800',
+        'bg-muted': 'bg-slate-800',
+
+        # Text colors
+        'text-primary': 'text-slate-50',
+        'text-secondary': 'text-slate-400',
+        'text-muted': 'text-slate-500',
+        'text-inverse': 'text-slate-900',
+
+        # Borders
+        'border-default': 'border-slate-800',
+        'border-strong': 'border-slate-700',
+        'border-muted': 'border-slate-900',
+
+        # Interactive states
+        'hover-bg': 'hover:bg-slate-800',
+        'hover-text': 'hover:text-slate-50',
+        'active-bg': 'bg-slate-50',
+        'active-text': 'text-slate-900',
+
+        # Component specific
+        'card-bg': 'bg-slate-900',
+        'input-bg': 'bg-slate-950',
+        'button-primary-bg': 'bg-slate-50',
+        'button-primary-hover': 'hover:bg-slate-200',
+        'button-secondary-bg': 'bg-slate-800',
+        'button-secondary-hover': 'hover:bg-slate-700',
+
+        # Destructive
+        'destructive-bg': 'bg-red-600',
+        'destructive-hover': 'hover:bg-red-700',
+
+        # Success
+        'success-bg': 'bg-green-600',
+        'success-hover': 'hover:bg-green-700',
+
+        # Raw color values (for Plotly and inline styles)
+        'raw-bg-primary': '#020617',
+        'raw-text-primary': '#f8fafc',
+        'raw-text-secondary': '#94a3b8',
+        'raw-border': '#334155',
+        'raw-grid': '#1e293b',
+        'raw-accent': '#f8fafc',
+    }
+
+
+class ThemeConfig:
+    """Global theme configuration."""
+    _current_theme: Dict[str, str] = Theme.LIGHT
+    _mode: str = 'light'
+
+    @classmethod
+    def set_theme(cls, mode: str = 'light'):
+        """Set the global theme mode.
+
+        Args:
+            mode: 'light' or 'dark'
+        """
+        cls._mode = mode
+        cls._current_theme = Theme.DARK if mode == 'dark' else Theme.LIGHT
+
+    @classmethod
+    def get_theme(cls) -> Dict[str, str]:
+        """Get the current theme colors."""
+        return cls._current_theme
+
+    @classmethod
+    def get_mode(cls) -> str:
+        """Get the current theme mode."""
+        return cls._mode
+
+    @classmethod
+    def get_color(cls, key: str) -> str:
+        """Get a specific color from the current theme."""
+        return cls._current_theme.get(key, '')
+
+
+def set_theme(mode: str = 'light'):
+    """Set the global theme mode for all components.
+
+    Args:
+        mode: 'light' or 'dark'
+
+    Example:
+        set_theme('dark')
+    """
+    ThemeConfig.set_theme(mode)
+
+
 # Global font configuration
 class FontConfig:
     """Global font configuration for shadcn components."""
@@ -50,17 +196,18 @@ def button(text: str, on_click=None, variant='default', size='default', icon=Non
         font_family: Optional custom font family (overrides global font)
         additional_classes: Additional Tailwind classes
     """
+    theme = ThemeConfig.get_theme()
 
     # Base classes for all buttons
     base_classes = 'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50'
 
-    # Variant-specific classes
+    # Variant-specific classes using theme
     variant_classes = {
-        'default': 'bg-slate-900 text-slate-50 hover:bg-slate-800 shadow text-white',
-        'destructive': 'bg-red-500 text-slate-50 hover:bg-red-600 shadow-sm text-white',
-        'outline': 'border border-slate-300 bg-white hover:bg-slate-100 hover:text-slate-900 text-black',
-        'secondary': 'bg-slate-100 text-slate-900 hover:bg-slate-200 shadow-sm',
-        'ghost': 'hover:bg-slate-100 hover:text-slate-900',
+        'default': f'{theme["button-primary-bg"]} {theme["active-text"]} {theme["button-primary-hover"]} shadow',
+        'destructive': f'{theme["destructive-bg"]} {theme["active-text"]} {theme["destructive-hover"]} shadow-sm',
+        'outline': f'border {theme["border-strong"]} {theme["bg-primary"]} {theme["hover-bg"]} {theme["hover-text"]}',
+        'secondary': f'{theme["button-secondary-bg"]} {theme["text-primary"]} {theme["button-secondary-hover"]} shadow-sm',
+        'ghost': f'{theme["hover-bg"]} {theme["hover-text"]}',
     }
 
     # Size-specific classes
@@ -93,16 +240,16 @@ def input(label: str = '', placeholder: str = '', value: str = '', font_family: 
         font_family: Optional custom font family (overrides global font)
         additional_classes: Additional Tailwind classes
     """
+    theme = ThemeConfig.get_theme()
     font = font_family or FontConfig.get_font()
 
     with ui.column().classes('w-full gap-1'):
         if label:
-            label_elem = ui.label(label).classes('text-sm font-medium text-black')
+            label_elem = ui.label(label).classes(f'text-sm font-medium {theme["text-primary"]}')
             label_elem.style(f'font-family: {font}')
         input_field = ui.input(placeholder=placeholder, value=value)
-        input_field.classes(f'w-full {additional_classes}'.strip())
+        input_field.classes(f'w-full {theme["input-bg"]} {theme["text-primary"]} {additional_classes}'.strip())
         input_field.props('outlined dense borderless')
-        input_field.props('bg-color="white" color="slate-900"')
         input_field.style(f'font-family: {font}')
 
     return input_field
@@ -118,31 +265,32 @@ def select(options: list, label: str = '', value=None, font_family: Optional[str
         font_family: Optional custom font family (overrides global font)
         additional_classes: Additional Tailwind classes
     """
+    theme = ThemeConfig.get_theme()
     font = font_family or FontConfig.get_font()
 
     with ui.column().classes('w-full gap-1'):
         if label:
-            label_elem = ui.label(label).classes('text-sm font-medium text-black')
+            label_elem = ui.label(label).classes(f'text-sm font-medium {theme["text-primary"]}')
             label_elem.style(f'font-family: {font}')
         select_field = ui.select(options, value=value)
-        select_field.classes(f'w-full {additional_classes}'.strip())
+        select_field.classes(f'w-full {theme["input-bg"]} {theme["text-primary"]} {additional_classes}'.strip())
         select_field.props('outlined dense borderless')
-        select_field.props('bg-color="white" color="slate-900"')
         select_field.style(f'font-family: {font}')
 
     return select_field
 
 
-def heading(text: str, level: int = 3, color: str = 'text-black', font_family: Optional[str] = None, additional_classes: str = ''):
+def heading(text: str, level: int = 3, color: str = '', font_family: Optional[str] = None, additional_classes: str = ''):
     """Create a shadcn-style heading
 
     Args:
         text: Heading text
         level: Heading level 1-6 (default: 3)
-        color: Tailwind color class (default: 'text-black')
+        color: Tailwind color class (default: uses theme text-primary)
         font_family: Optional custom font family (overrides global font)
         additional_classes: Additional Tailwind classes
     """
+    theme = ThemeConfig.get_theme()
     size_classes = {
         1: 'text-4xl font-bold',
         2: 'text-3xl font-bold',
@@ -152,7 +300,8 @@ def heading(text: str, level: int = 3, color: str = 'text-black', font_family: O
         6: 'text-base font-medium'
     }
 
-    classes = f'{size_classes.get(level, size_classes[3])} {color} {additional_classes}'.strip()
+    text_color = color if color else theme['text-primary']
+    classes = f'{size_classes.get(level, size_classes[3])} {text_color} {additional_classes}'.strip()
     font = font_family or FontConfig.get_font()
     heading = ui.label(text).classes(classes)
     heading.style(f'font-family: {font}')
@@ -193,14 +342,16 @@ def card(
         # Card with title and content
         card(title='My Card', subtitle='Description', card_content='Content here')
     """
+    theme = ThemeConfig.get_theme()
+
     # Base card classes
-    base_classes = 'rounded-lg bg-white'
+    base_classes = f'rounded-lg {theme["card-bg"]}'
 
     # Variant-specific classes
     variant_classes = {
-        'default': 'border border-slate-200 shadow-none',
-        'dashed': 'border border-dashed border-slate-400 shadow-none',
-        'elevated': 'border border-slate-200 shadow-md',
+        'default': f'border {theme["border-default"]} shadow-none',
+        'dashed': f'border border-dashed {theme["border-strong"]} shadow-none',
+        'elevated': f'border {theme["border-default"]} shadow-md',
         'ghost': 'shadow-none',
     }
 
@@ -217,14 +368,14 @@ def card(
             if title or subtitle:
                 with ui.column().classes('gap-1 mb-4'):
                     if title:
-                        title_label = ui.label(title).classes('text-lg font-semibold text-slate-900')
+                        title_label = ui.label(title).classes(f'text-lg font-semibold {theme["text-primary"]}')
                         title_label.style(f'font-family: {font}')
                     if subtitle:
-                        subtitle_label = ui.label(subtitle).classes('text-sm text-slate-600')
+                        subtitle_label = ui.label(subtitle).classes(f'text-sm {theme["text-secondary"]}')
                         subtitle_label.style(f'font-family: {font}')
 
             if card_content:
-                content_label = ui.label(card_content).classes('text-sm text-slate-700')
+                content_label = ui.label(card_content).classes(f'text-sm {theme["text-primary"]}')
                 content_label.style(f'font-family: {font}')
 
     return card_element
@@ -287,11 +438,12 @@ def dialog(title: str = '', additional_classes: str = ''):
                 button('Cancel', on_click=dialog.close, variant='outline')
                 button('Confirm', on_click=lambda: (do_action(), dialog.close()))
     """
+    theme = ThemeConfig.get_theme()
     dialog = ui.dialog()
 
-    with dialog, ui.card().classes(f'p-6 min-w-96 max-w-2xl {additional_classes}'.strip()):
+    with dialog, ui.card().classes(f'{theme["card-bg"]} p-6 min-w-96 max-w-2xl {additional_classes}'.strip()):
         if title:
-            heading(title, level=3, color='text-slate-900')
+            heading(title, level=3)
             ui.separator().classes('my-4')
 
         # Content will be added by the context manager
@@ -309,16 +461,18 @@ def badge(text: str, variant: str = 'default', additional_classes: str = '', fon
         additional_classes: Additional Tailwind classes
         font_family: Optional custom font family (overrides global font)
     """
+    theme = ThemeConfig.get_theme()
+
     # Base classes for all badges
     base_classes = 'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors'
 
     # Variant-specific classes
     variant_classes = {
-        'default': 'bg-slate-900 text-slate-50 hover:bg-slate-800',
-        'secondary': 'bg-slate-100 text-slate-900 hover:bg-slate-200',
-        'destructive': 'bg-red-500 text-slate-50 hover:bg-red-600',
-        'outline': 'border border-slate-300 text-slate-900 bg-white',
-        'success': 'bg-green-500 text-white hover:bg-green-600',
+        'default': f'{theme["button-primary-bg"]} {theme["active-text"]} {theme["button-primary-hover"]}',
+        'secondary': f'{theme["button-secondary-bg"]} {theme["text-primary"]} {theme["button-secondary-hover"]}',
+        'destructive': f'{theme["destructive-bg"]} {theme["active-text"]} {theme["destructive-hover"]}',
+        'outline': f'border {theme["border-strong"]} {theme["text-primary"]} {theme["bg-primary"]}',
+        'success': f'{theme["success-bg"]} {theme["text-inverse"]} {theme["success-hover"]}',
     }
 
     classes = f'{base_classes} {variant_classes.get(variant, variant_classes["default"])} {additional_classes}'.strip()
@@ -368,8 +522,10 @@ def avatar(
     # Shape classes
     shape_class = 'rounded-full' if variant == 'circle' else 'rounded-md'
 
+    theme = ThemeConfig.get_theme()
+
     # Base classes
-    base_classes = f'inline-flex items-center justify-center overflow-hidden bg-slate-100 border border-slate-200 {shape_class} {size_classes.get(size, size_classes["md"])} {additional_classes}'.strip()
+    base_classes = f'inline-flex items-center justify-center overflow-hidden {theme["bg-accent"]} border {theme["border-default"]} {shape_class} {size_classes.get(size, size_classes["md"])} {additional_classes}'.strip()
 
     font = font_family or FontConfig.get_font()
 
@@ -380,7 +536,7 @@ def avatar(
         return avatar_container
     else:
         # Create avatar with fallback text
-        avatar_label = ui.label(fallback_text).classes(f'{base_classes} font-medium text-slate-600')
+        avatar_label = ui.label(fallback_text).classes(f'{base_classes} font-medium {theme["text-secondary"]}')
         avatar_label.style(f'font-family: {font}')
         return avatar_label
 
@@ -392,10 +548,13 @@ def separator(orientation: str = 'horizontal', additional_classes: str = ''):
         orientation: 'horizontal' or 'vertical'
         additional_classes: Additional Tailwind classes
     """
+    theme = ThemeConfig.get_theme()
+    border_color = theme['border-default'].replace('border-', 'bg-')
+
     if orientation == 'vertical':
-        classes = f'h-full w-px bg-slate-200 {additional_classes}'.strip()
+        classes = f'h-full w-px {border_color} {additional_classes}'.strip()
     else:
-        classes = f'w-full h-px bg-slate-200 {additional_classes}'.strip()
+        classes = f'w-full h-px {border_color} {additional_classes}'.strip()
 
     return ui.separator().classes(classes)
 
@@ -606,13 +765,14 @@ def accordion(items: List[Dict[str, str]], width: str = 'w-full', variant: str =
             {'title': 'Is it styled?', 'content': 'Yes. It comes with default styles.'},
         ])
     """
+    theme = ThemeConfig.get_theme()
     font = font_family or FontConfig.get_font()
 
     # Variant-specific classes
     variant_classes = {
-        'default': 'w-full border-b border-slate-200',
-        'bordered': 'w-full border border-slate-200 rounded-lg mb-2',
-        'separated': 'w-full mb-4 border border-slate-200 rounded-lg shadow-sm',
+        'default': f'w-full border-b {theme["border-default"]}',
+        'bordered': f'w-full border {theme["border-default"]} rounded-lg mb-2',
+        'separated': f'w-full mb-4 border {theme["border-default"]} rounded-lg shadow-sm',
     }
 
     with ui.column().classes(f'{width} {additional_classes}'.strip()) as container:
@@ -624,11 +784,11 @@ def accordion(items: List[Dict[str, str]], width: str = 'w-full', variant: str =
 
             with ui.expansion(title, icon='').classes(item_classes) as exp:
                 # Style the expansion header
-                exp._props['header-class'] = 'text-sm font-medium hover:no-underline'
+                exp._props['header-class'] = f'text-sm font-medium hover:no-underline {theme["text-primary"]}'
 
                 # Add content
                 with ui.column().classes('pb-4 pt-0'):
-                    content_label = ui.label(content).classes('text-sm text-slate-600')
+                    content_label = ui.label(content).classes(f'text-sm {theme["text-secondary"]}')
                     content_label.style(f'font-family: {font}')
 
                 # Apply font to expansion header
