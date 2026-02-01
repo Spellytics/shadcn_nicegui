@@ -166,7 +166,7 @@ def card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str 
     """
     # Base card classes
     base_classes = 'rounded-lg bg-white'
-    
+
     # Variant-specific classes
     variant_classes = {
         'default': 'shadow-sm',
@@ -174,7 +174,7 @@ def card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str 
         'elevated': 'shadow-lg',
         'ghost': 'shadow-none',
     }
-    
+
     variant_class = variant_classes.get(variant, variant_classes['default'])
     classes = f'{base_classes} {variant_class} {width} {margin} {padding} {additional_classes}'.strip()
     return ui.card().classes(classes)

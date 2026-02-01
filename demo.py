@@ -111,15 +111,15 @@ def main():
                     with card(width='w-64', padding='p-6', variant='default'):
                         ui.label('Default').classes('text-lg font-semibold')
                         ui.label('Subtle shadow with white background').classes('text-sm text-slate-600 mt-2')
-                    
+
                     with card(width='w-64', padding='p-6', variant='outlined'):
                         ui.label('Outlined').classes('text-lg font-semibold')
                         ui.label('Border with no shadow').classes('text-sm text-slate-600 mt-2')
-                    
+
                     with card(width='w-64', padding='p-6', variant='elevated'):
                         ui.label('Elevated').classes('text-lg font-semibold')
                         ui.label('Prominent shadow for emphasis').classes('text-sm text-slate-600 mt-2')
-                    
+
                     with card(width='w-64', padding='p-6', variant='ghost'):
                         ui.label('Ghost').classes('text-lg font-semibold')
                         ui.label('Minimal styling, no shadow').classes('text-sm text-slate-600 mt-2')
