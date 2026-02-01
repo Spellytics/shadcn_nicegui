@@ -259,8 +259,8 @@ def main():
         title='Shadcn NiceGUI Demo',
         favicon='⚡',
         dark=False,
-        reload=False,
-        port=8081
+        reload=True,
+        port=8080
     )
 
 

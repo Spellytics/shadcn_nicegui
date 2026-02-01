@@ -204,7 +204,7 @@ def table(columns: List[Dict], rows: List[Dict], additional_classes: str = ''):
         rows: List of row data dictionaries
         additional_classes: Additional Tailwind classes
     """
-    classes = f'w-full {additional_classes}'.strip()
+    classes = f'w-full shadcn-table {additional_classes}'.strip()
 
     table = ui.table(columns=columns, rows=rows, row_key='id')
     table.classes(classes)
@@ -212,8 +212,14 @@ def table(columns: List[Dict], rows: List[Dict], additional_classes: str = ''):
     # Apply shadcn styling via props
     table.props('flat bordered separator="none"')
 
-    # Add darker bottom border for headers
-    table.style('thead { border-bottom: 2px solid rgb(15 23 42) !important; }')
+    # Add custom CSS for header border
+    ui.add_head_html('''
+        <style>
+        .shadcn-table thead tr {
+            border-bottom: 2px solid rgb(15 23 42) !important;
+        }
+        </style>
+    ''')
 
     return table
 
