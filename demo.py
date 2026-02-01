@@ -100,6 +100,30 @@ def main():
                         input(label='Email', placeholder='Email')
                         input(label='Password', placeholder='Password')
 
+            # Card Variants Section
+            with ui.column().classes('w-full gap-6 mt-16'):
+                with ui.row().classes('w-full items-center justify-between'):
+                    with ui.column().classes('gap-1'):
+                        ui.label('Card').classes('text-2xl font-semibold')
+                        ui.label('Displays content in a contained box with optional variants.').classes('text-sm text-slate-600')
+
+                with ui.row().classes('w-full gap-4 flex-wrap'):
+                    with card(width='w-64', padding='p-6', variant='default'):
+                        ui.label('Default').classes('text-lg font-semibold')
+                        ui.label('Subtle shadow with white background').classes('text-sm text-slate-600 mt-2')
+                    
+                    with card(width='w-64', padding='p-6', variant='outlined'):
+                        ui.label('Outlined').classes('text-lg font-semibold')
+                        ui.label('Border with no shadow').classes('text-sm text-slate-600 mt-2')
+                    
+                    with card(width='w-64', padding='p-6', variant='elevated'):
+                        ui.label('Elevated').classes('text-lg font-semibold')
+                        ui.label('Prominent shadow for emphasis').classes('text-sm text-slate-600 mt-2')
+                    
+                    with card(width='w-64', padding='p-6', variant='ghost'):
+                        ui.label('Ghost').classes('text-lg font-semibold')
+                        ui.label('Minimal styling, no shadow').classes('text-sm text-slate-600 mt-2')
+
             # Badges & Avatars Section
             with card(width='w-full', padding='p-8'):
                 heading('Badges & Avatars', level=2)
@@ -170,24 +194,9 @@ def main():
                         {'id': 3, 'name': 'Bob Johnson', 'email': 'bob@example.com', 'role': 'User'},
                     ]
 
-                    table(columns=columns, rows=rows)8'):
-                ui.label('Built with').classes('text-slate-600')
-                ui.label('❤️').classes('text-red-500')
-                ui.label('using').classes('text-slate-600')
-                badge('NiceGUI', variant='secondary')
-                ui.label('and').classes('text-slate-600')
-                badge('Shadcn', variant='secondary')
+                    table(columns=columns, rows=rows)
 
-    ui.run(
-        title='Shadcn NiceGUI Demo',
-        favicon='⚡',
-        dark=False,
-        reload=False
-    )
-
-
-if __name__ in {"__main__", "__mp_main__"}:
-    main()
+        # Footer
         with ui.column().classes('w-full border-t border-slate-200 bg-slate-50 mt-24'):
             with ui.column().classes('w-full max-w-5xl mx-auto px-8 py-16 gap-8'):
                 with ui.row().classes('w-full justify-between flex-wrap gap-8'):
@@ -215,3 +224,14 @@ if __name__ in {"__main__", "__mp_main__"}:
                         badge('NiceGUI', variant='outline')
                         ui.label('and').classes('text-sm text-slate-600')
                         badge('Tailwind', variant='outline')
+
+    ui.run(
+        title='Shadcn NiceGUI Demo',
+        favicon='⚡',
+        dark=False,
+        reload=False
+    )
+
+
+if __name__ in {"__main__", "__mp_main__"}:
+    main()

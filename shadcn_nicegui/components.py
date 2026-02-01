@@ -154,7 +154,7 @@ def heading(text: str, level: int = 3, color: str = 'text-black', font_family: O
     heading.style(f'font-family: {font}')
 
 
-def card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str = 'p-8', additional_classes: str = ''):
+def card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str = 'p-8', additional_classes: str = '', variant: str = 'default'):
     """Create a shadcn-style card container
 
     Args:
@@ -162,8 +162,21 @@ def card(width: str = 'w-full max-w-4xl', margin: str = 'mx-auto', padding: str 
         margin: Margin classes (default: 'mx-auto')
         padding: Padding classes (default: 'p-8')
         additional_classes: Additional Tailwind classes
+        variant: 'default', 'outlined', 'elevated', 'ghost' (default: 'default')
     """
-    classes = f'{width} {margin} {padding} {additional_classes}'.strip()
+    # Base card classes
+    base_classes = 'rounded-lg bg-white'
+    
+    # Variant-specific classes
+    variant_classes = {
+        'default': 'shadow-sm',
+        'outlined': 'border border-slate-200 shadow-none',
+        'elevated': 'shadow-lg',
+        'ghost': 'shadow-none',
+    }
+    
+    variant_class = variant_classes.get(variant, variant_classes['default'])
+    classes = f'{base_classes} {variant_class} {width} {margin} {padding} {additional_classes}'.strip()
     return ui.card().classes(classes)
 
 
