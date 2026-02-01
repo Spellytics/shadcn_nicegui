@@ -34,7 +34,6 @@ def main():
                 ui.label('shadcn/nicegui').classes('text-lg font-semibold')
 
             with ui.row().classes('gap-6 items-center'):
-                ui.link('Docs', '#docs').classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
                 ui.link('Components', '#components').classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
                 ui.link('Examples', '#examples').classes('text-sm text-slate-600 hover:text-slate-900 no-underline')
                 ui.link('GitHub', 'https://github.com/Spellytics/shadcn_nicegui', new_tab=True).classes('text-sm text-slate-600 hover:text-slate-900 no-underline')

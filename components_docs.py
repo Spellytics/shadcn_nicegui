@@ -86,15 +86,6 @@ def show_accordion_docs():
     # Installation
     show_installation_section()
 
-    # Usage
-    section_heading('Usage')
-    create_code_block('''from shadcn_nicegui import accordion
-
-accordion([
-    {'title': 'Item 1', 'content': 'Content 1'},
-    {'title': 'Item 2', 'content': 'Content 2'},
-], variant='default')''')
-
     # Examples
     section_heading('Examples')
 
